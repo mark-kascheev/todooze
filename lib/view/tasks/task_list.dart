@@ -18,17 +18,21 @@ class TaskList extends StatelessWidget {
         final taskList = state.tasks;
         return ListView.separated(
             itemCount: taskList.length,
-            itemBuilder: (context, index) => _TaskItem(
-                title: taskList[index].title,
-                isChecked: taskList[index].isDone),
-            separatorBuilder: (context, index) => const SizedBox(height: 10));
+            itemBuilder: (context, index) {
+             final task = taskList[index];
+             return _TaskItem(
+                 key: ValueKey(task.id),
+                 title: task.title,
+                 isChecked: task.isDone);
+            },
+          separatorBuilder: (context, index) => const SizedBox(height: 10));
       }
       return const SizedBox();
     });
   }
 }
 
-class _TaskItem extends StatelessWidget {
+class _TaskItem extends StatefulWidget {
   final String title;
   final bool isChecked;
 
@@ -36,20 +40,41 @@ class _TaskItem extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<_TaskItem> createState() => _TaskItemState();
+}
+
+class _TaskItemState extends State<_TaskItem> {
+  bool _isChecked = false;
+
+  @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.zero,
+      contentPadding: const EdgeInsets.only(right: 10),
       leading: Checkbox(
-        value: isChecked,
-        onChanged: (bool? value) {},
+        activeColor: Theme.of(context).colorScheme.onBackground,
+        checkColor: Theme.of(context).colorScheme.primary,
+        value: _isChecked,
+        onChanged: (bool? value) {
+          setState(() {
+            _isChecked = value ?? false;
+          });
+        },
         shape: const CircleBorder(),
       ),
-      title: Text(title,
-          maxLines: 1, softWrap: true, overflow: TextOverflow.ellipsis),
-      trailing: const Icon(Icons.height),
+      title: Text(widget.title,
+          style: _isChecked
+              ? TextStyle(
+                  decoration: TextDecoration.lineThrough,
+                  color: Theme.of(context).colorScheme.onBackground)
+              : null,
+          maxLines: 1,
+          softWrap: true,
+          overflow: TextOverflow.ellipsis),
+      trailing: Image.asset('assets/icons/change_order_item.png',
+          width: 20, height: 20),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15))),
-      tileColor: Colors.grey,
+      tileColor: Theme.of(context).colorScheme.primary,
     );
   }
 }
