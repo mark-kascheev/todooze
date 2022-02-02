@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todoooze/data/task_repository.dart';
-import 'package:todoooze/domain/task.dart';
+import 'package:todoooze/domain/repository/task_repository.dart';
+import 'package:todoooze/domain/model/task.dart';
 
 class TaskListBloc extends Bloc<TaskListEvent, TaskListState> {
   final TaskRepository taskRepo;
