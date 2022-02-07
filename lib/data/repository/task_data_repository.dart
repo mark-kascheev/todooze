@@ -23,4 +23,9 @@ class TaskDataRepository extends TaskRepository {
   Future addNewTask(Task task) {
     return api.addNewTask(TaskDto.fromModel(task));
   }
+
+  @override
+  Future updateTask(Task task) {
+    return api.updateTask(TaskDto.fromModel(task));
+  }
 }

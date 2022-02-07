@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todoooze/bloc/task_list_bloc.dart';
+import 'package:todoooze/domain/model/task.dart';
 
 class TaskList extends StatelessWidget {
   const TaskList({Key? key}) : super(key: key);
@@ -19,32 +20,20 @@ class TaskList extends StatelessWidget {
         return ListView.separated(
             itemCount: taskList.length,
             itemBuilder: (context, index) {
-             final task = taskList[index];
-             return _TaskItem(
-                 key: ValueKey(task.id),
-                 title: task.title,
-                 isChecked: task.isDone);
+              final task = taskList[index];
+              return _TaskItem(key: ValueKey(task.id), task: task);
             },
-          separatorBuilder: (context, index) => const SizedBox(height: 10));
+            separatorBuilder: (context, index) => const SizedBox(height: 10));
       }
       return const SizedBox();
     });
   }
 }
 
-class _TaskItem extends StatefulWidget {
-  final String title;
-  final bool isChecked;
+class _TaskItem extends StatelessWidget {
+  final Task task;
 
-  const _TaskItem({Key? key, required this.title, required this.isChecked})
-      : super(key: key);
-
-  @override
-  State<_TaskItem> createState() => _TaskItemState();
-}
-
-class _TaskItemState extends State<_TaskItem> {
-  bool _isChecked = false;
+  const _TaskItem({Key? key, required this.task}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,16 +42,17 @@ class _TaskItemState extends State<_TaskItem> {
       leading: Checkbox(
         activeColor: Theme.of(context).colorScheme.onBackground,
         checkColor: Theme.of(context).colorScheme.primary,
-        value: _isChecked,
+        value: task.isDone,
         onChanged: (bool? value) {
-          setState(() {
-            _isChecked = value ?? false;
-          });
+          if (value != null) {
+            BlocProvider.of<TaskListBloc>(context)
+                .add(TaskListItemChecked(task: task, isChecked: value));
+          }
         },
         shape: const CircleBorder(),
       ),
-      title: Text(widget.title,
-          style: _isChecked
+      title: Text(task.title,
+          style: task.isDone
               ? TextStyle(
                   decoration: TextDecoration.lineThrough,
                   color: Theme.of(context).colorScheme.onBackground)

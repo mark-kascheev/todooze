@@ -25,4 +25,9 @@ class FirebaseApi extends TaskApi {
   Future addNewTask(TaskDto taskDto) {
     return instance.collection(tasksCollection).add(taskDto.toJson());
   }
+
+  @override
+  Future updateTask(TaskDto taskDto) {
+    return instance.doc('$tasksCollection/${taskDto.id}').update(taskDto.toJson());
+  }
 }

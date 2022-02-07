@@ -11,4 +11,6 @@ abstract class TaskRepository {
   Stream<List<Task>> subscribeToTasks();
 
   Future addNewTask(Task task);
+
+  Future updateTask(Task task);
 }
