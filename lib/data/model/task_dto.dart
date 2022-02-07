@@ -10,11 +10,20 @@ class TaskDto {
       : title = map['title'],
         description = map['description'],
         isDone = map['isDone'];
+
+  TaskDto.fromModel(Task task)
+      : id = task.id,
+        title = task.title,
+        description = task.description,
+        isDone = task.isDone;
 }
 
-extension TaskMapper on TaskDto {
+extension TaskDtoMapper on TaskDto {
   Task toModel() =>
       Task(id: id, title: title, description: description, isDone: isDone);
+
+  Map<String, dynamic> toJson() =>
+      {'title': title, 'description': description, 'isDone': isDone};
 }
 
 extension TaskListMapper on List<TaskDto> {

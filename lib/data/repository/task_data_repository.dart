@@ -18,4 +18,14 @@ class TaskDataRepository extends TaskRepository {
         .listenTasks()
         .map((dtoList) => dtoList.toTaskList());
   }
+
+  @override
+  Future addNewTask(Task task) {
+    return api.addNewTask(TaskDto.fromModel(task));
+  }
+
+  @override
+  Future updateTask(Task task) {
+    return api.updateTask(TaskDto.fromModel(task));
+  }
 }
