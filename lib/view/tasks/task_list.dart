@@ -18,6 +18,8 @@ class TaskList extends StatelessWidget {
       if (state is TaskListLoadSuccess) {
         final taskList = state.tasks;
         return ListView.separated(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
             itemCount: taskList.length,
             itemBuilder: (context, index) {
               final task = taskList[index];
