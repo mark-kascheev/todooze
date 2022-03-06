@@ -8,7 +8,7 @@ class TaskDto {
 
   TaskDto.fromApi(this.id, Map<String, dynamic> map)
       : title = map['title'],
-        description = map['description'],
+        description = map['description'] ?? '',
         isDone = map['isDone'];
 
   TaskDto.fromModel(Task task)
@@ -28,4 +28,10 @@ extension TaskDtoMapper on TaskDto {
 
 extension TaskListMapper on List<TaskDto> {
   List<Task> toTaskList() => map((item) => item.toModel()).toList();
+
+  List<Map<String, dynamic>> toJson() => map((task) => task.toJson()).toList();
+}
+
+extension TaskDtoListMapper on List<Map<String, dynamic>> {
+  List<TaskDto> toTaskDtoList(String id) => map((data) => TaskDto.fromApi(id, data)).toList();
 }

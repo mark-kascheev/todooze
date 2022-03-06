@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todoooze/bloc/create_task_bloc.dart';
-import 'package:todoooze/data/api/firebase_api.dart';
+import 'package:todoooze/data/api/firebase_task_api.dart';
 import 'package:todoooze/data/repository/task_data_repository.dart';
 
 class CreateTaskDialogContent extends StatefulWidget {
@@ -20,7 +20,7 @@ class _CreateTaskDialogContentState extends State<CreateTaskDialogContent> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) =>
-          CreateTaskBloc(TaskDataRepository(FirebaseApi())),
+          CreateTaskBloc(TaskDataRepository(FirebaseTaskApi())),
       child: Container(
         margin: MediaQuery
             .of(context)

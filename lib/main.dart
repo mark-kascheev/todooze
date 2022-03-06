@@ -2,8 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:todoooze/bloc/project_list_bloc.dart';
 import 'package:todoooze/bloc/task_list_bloc.dart';
-import 'package:todoooze/data/api/firebase_api.dart';
+import 'package:todoooze/data/api/firebase_project_api.dart';
+import 'package:todoooze/data/api/firebase_task_api.dart';
+import 'package:todoooze/data/repository/project_data_repository.dart';
 import 'package:todoooze/data/repository/task_data_repository.dart';
 import 'package:todoooze/view/main_page.dart';
 import 'package:todoooze/view/theme.dart';
@@ -14,6 +17,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const TodooozeApp());
 }
 
@@ -25,8 +29,11 @@ class TodooozeApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => TaskListBloc(TaskDataRepository(FirebaseApi()))
+            create: (context) => TaskListBloc(TaskDataRepository(FirebaseTaskApi()))
               ..add(TaskListStarted())),
+        BlocProvider(
+            create: (context) => ProjectListBloc(repository: ProjectDataRepository(FirebaseProjectApi()))
+              ..add(ProjectListStarted())),
       ],
       child: ChangeNotifierProvider<TodooozeTheme>(
         create: (_) => TodooozeTheme(),
