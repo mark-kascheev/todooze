@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "429141041642",
+    "project_id": "todoooze-f207a",
+    "storage_bucket": "todoooze-f207a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429141041642:android:b3fd5dec2f9532e1701293",
+        "android_client_info": {
+          "package_name": "com.example.todoooze"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "429141041642-ilkh1b1p6dsgnfl6a9bm88o58sqasn37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWsjkYEz070f107M_hYQ9zffACE4J9Ne0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "429141041642-ilkh1b1p6dsgnfl6a9bm88o58sqasn37.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
