@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:todoooze/domain/api/api.dart';
+import 'package:todoooze/domain/api/task_api.dart';
 import 'package:todoooze/data/model/task_dto.dart';
 
 const String tasksCollection = 'tasks';
 
-class FirebaseApi extends TaskApi {
+class FirebaseTaskApi extends TaskApi {
   final instance = FirebaseFirestore.instance;
 
   @override
