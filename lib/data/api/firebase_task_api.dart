@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:todoooze/domain/api/task_api.dart';
 import 'package:todoooze/data/model/task_dto.dart';
+import 'package:todoooze/domain/api/api.dart';
 
 const String tasksCollection = 'tasks';
 

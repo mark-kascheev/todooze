@@ -1,4 +1,4 @@
-import 'package:todoooze/domain/api/task_api.dart';
+import 'package:todoooze/domain/api/api.dart';
 import 'package:todoooze/domain/model/task.dart';
 
 abstract class TaskRepository {
