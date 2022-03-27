@@ -10,29 +10,28 @@ class FirebaseTaskApi extends TaskApi {
   @override
   Future<List<TaskDto>> getAllTasks() async {
     final snapshot = await instance.collection(tasksCollection).get();
-    return snapshot.docs.map((doc) => TaskDto.fromApi(doc.id, doc.data())).toList();
+    return snapshot.docs
+        .map((doc) => TaskDto.fromApi(doc.id, doc.data()))
+        .toList();
   }
 
   @override
-  Stream<List<TaskDto>> listenTasks() => instance
-      .collection(tasksCollection)
-      .snapshots()
-      .map((querySnapshot) => querySnapshot.docs
-          .map((doc) => TaskDto.fromApi(doc.id, doc.data()))
-          .toList());
-
-  @override
-  Future addNewTask(TaskDto taskDto) {
-    return instance.collection(tasksCollection).add(taskDto.toJson());
+  Stream<List<TaskDto>> listenTasks() {
+    return instance.collection(tasksCollection).orderBy('isDone', descending: false).snapshots().map(
+        (querySnapshot) => querySnapshot.docs
+            .map((doc) => TaskDto.fromApi(doc.id, doc.data()))
+            .toList());
   }
 
   @override
-  Future updateTask(TaskDto taskDto) {
-    return instance.doc('$tasksCollection/${taskDto.id}').update(taskDto.toJson());
-  }
+  Future addNewTask(TaskDto taskDto) =>
+      instance.collection(tasksCollection).add(taskDto.toJson());
 
   @override
-  Future deleteTask(String taskId) {
-    return instance.doc('$tasksCollection/$taskId').delete();
-  }
+  Future updateTask(TaskDto taskDto) =>
+      instance.doc('$tasksCollection/${taskDto.id}').update(taskDto.toJson());
+
+  @override
+  Future deleteTask(String taskId) =>
+      instance.doc('$tasksCollection/$taskId').delete();
 }
