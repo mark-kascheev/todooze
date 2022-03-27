@@ -21,7 +21,9 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
 
   void _createNewTask(CreateTaskSaved event, Emitter emit) async{
     try {
-      await taskRepository.addNewTask(state.task);
+      if(state.task.title.isNotEmpty) {
+        await taskRepository.addNewTask(state.task);
+      }
     } catch(e) {
 
     }

@@ -5,4 +5,5 @@ abstract class TaskApi {
   Stream<List<TaskDto>> listenTasks();
   Future addNewTask(TaskDto taskDto);
   Future updateTask(TaskDto taskDto);
+  Future deleteTask(String taskId);
 }

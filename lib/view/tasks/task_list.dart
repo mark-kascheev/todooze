@@ -23,7 +23,7 @@ class TaskList extends StatelessWidget {
             itemCount: taskList.length,
             itemBuilder: (context, index) {
               final task = taskList[index];
-              return _TaskItem(key: ValueKey(task.id), task: task);
+              return _TaskItem(task: task);
             },
             separatorBuilder: (context, index) => const SizedBox(height: 10));
       }
@@ -39,34 +39,70 @@ class _TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: const EdgeInsets.only(right: 10),
-      leading: Checkbox(
-        activeColor: Theme.of(context).colorScheme.onBackground,
-        checkColor: Theme.of(context).colorScheme.primary,
-        value: task.isDone,
-        onChanged: (bool? value) {
-          if (value != null) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Dismissible(
+        key: UniqueKey(),
+        secondaryBackground: const _DismissibleActionBackground(color: Colors.red, alignment: Alignment.centerRight, iconPath: 'delete'),
+        background: task.isDone ? const _DismissibleActionBackground(color: Colors.orangeAccent, alignment: Alignment.centerLeft, iconPath: 'update') : const _DismissibleActionBackground(color: Colors.green, alignment: Alignment.centerLeft, iconPath: 'check'),
+        onDismissed: (direction) {
+          if(direction == DismissDirection.endToStart) {
             BlocProvider.of<TaskListBloc>(context)
-                .add(TaskListItemChecked(task: task, isChecked: value));
+                .add(TaskListItemDeleted(task: task));
+          }
+          if(direction == DismissDirection.startToEnd) {
+            BlocProvider.of<TaskListBloc>(context)
+                .add(TaskListItemChecked(task: task, isChecked: !task.isDone));
           }
         },
-        shape: const CircleBorder(),
+        child: ListTile(
+          contentPadding: const EdgeInsets.only(right: 10),
+          leading: Checkbox(
+            activeColor: Theme.of(context).colorScheme.onBackground,
+            checkColor: Theme.of(context).colorScheme.primary,
+            value: task.isDone,
+            onChanged: (bool? value) {
+              if (value != null) {
+                BlocProvider.of<TaskListBloc>(context)
+                    .add(TaskListItemChecked(task: task, isChecked: value));
+              }
+            },
+            shape: const CircleBorder(),
+          ),
+          title: Text(task.title,
+              style: task.isDone
+                  ? TextStyle(
+                      decoration: TextDecoration.lineThrough,
+                      color: Theme.of(context).colorScheme.onBackground)
+                  : null,
+              maxLines: 1,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis),
+          trailing: Image.asset('assets/icons/change_order_item.png',
+              width: 20, height: 20),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15))),
+          tileColor: Theme.of(context).colorScheme.primary,
+        ),
       ),
-      title: Text(task.title,
-          style: task.isDone
-              ? TextStyle(
-                  decoration: TextDecoration.lineThrough,
-                  color: Theme.of(context).colorScheme.onBackground)
-              : null,
-          maxLines: 1,
-          softWrap: true,
-          overflow: TextOverflow.ellipsis),
-      trailing: Image.asset('assets/icons/change_order_item.png',
-          width: 20, height: 20),
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15))),
-      tileColor: Theme.of(context).colorScheme.primary,
     );
   }
 }
+
+class _DismissibleActionBackground extends StatelessWidget {
+  final Color color;
+  final Alignment alignment;
+  final String iconPath;
+  const _DismissibleActionBackground({Key? key, required this.color, required this.alignment, required this.iconPath}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: color,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      alignment: alignment,
+      child: Image(image: AssetImage('assets/icons/$iconPath.png'), color: Colors.white, width: 30, height: 30),
+    );
+  }
+}
+
