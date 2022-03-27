@@ -30,4 +30,9 @@ class FirebaseTaskApi extends TaskApi {
   Future updateTask(TaskDto taskDto) {
     return instance.doc('$tasksCollection/${taskDto.id}').update(taskDto.toJson());
   }
+
+  @override
+  Future deleteTask(String taskId) {
+    return instance.doc('$tasksCollection/$taskId').delete();
+  }
 }

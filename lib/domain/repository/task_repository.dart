@@ -13,4 +13,6 @@ abstract class TaskRepository {
   Future addNewTask(Task task);
 
   Future updateTask(Task task);
+
+  Future deleteTask(Task task);
 }

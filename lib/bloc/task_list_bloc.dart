@@ -8,6 +8,7 @@ class TaskListBloc extends Bloc<TaskListEvent, TaskListState> {
   TaskListBloc(this.taskRepo) : super(TaskListInitial()) {
     on<TaskListStarted>(_listenTasks);
     on<TaskListItemChecked>(_updateListItem);
+    on<TaskListItemDeleted>(_deleteListItem);
   }
 
   void _listenTasks(TaskListStarted event, Emitter emit) async {
@@ -21,6 +22,10 @@ class TaskListBloc extends Bloc<TaskListEvent, TaskListState> {
     final updatedTask = event.task.copyWith(isDone: event.isChecked);
     await taskRepo.updateTask(updatedTask);
   }
+
+  void _deleteListItem(TaskListItemDeleted event, Emitter emit) async {
+    await taskRepo.deleteTask(event.task);
+  }
 }
 
 abstract class TaskListEvent {}
@@ -32,6 +37,12 @@ class TaskListItemChecked extends TaskListEvent {
   final bool isChecked;
 
   TaskListItemChecked({required this.task, required this.isChecked});
+}
+
+class TaskListItemDeleted extends TaskListEvent {
+  final Task task;
+
+  TaskListItemDeleted({required this.task});
 }
 
 abstract class TaskListState {}
