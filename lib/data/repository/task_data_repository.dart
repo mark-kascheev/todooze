@@ -31,6 +31,6 @@ class TaskDataRepository extends TaskRepository {
 
   @override
   Future deleteTask(Task task) {
-    throw api.deleteTask(task.id);
+    return api.deleteTask(task.id);
   }
 }

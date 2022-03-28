@@ -42,7 +42,7 @@ class MainPage extends StatelessWidget {
             child: ExpandableFloatingButton(children: [
               ActionButton(
                 actionDescription: 'Create task',
-                icon: Icon(Icons.style),
+                icon: const Icon(Icons.task_alt_rounded),
                 onPressed: () => {
                   showGeneralDialog(
                     context: context,
@@ -64,7 +64,7 @@ class MainPage extends StatelessWidget {
                 },
               ),
               ActionButton(
-                icon: Icon(Icons.settings),
+                icon: const Icon(Icons.mode_edit_rounded),
                 onPressed: () {},
                 actionDescription: 'Create project',
               )
