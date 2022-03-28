@@ -55,36 +55,50 @@ class _TaskItem extends StatelessWidget {
                 .add(TaskListItemChecked(task: task, isChecked: !task.isDone));
           }
         },
-        child: ListTile(
-          contentPadding: const EdgeInsets.only(right: 10),
-          leading: Checkbox(
-            activeColor: Theme.of(context).colorScheme.onBackground,
-            checkColor: Theme.of(context).colorScheme.primary,
-            value: task.isDone,
-            onChanged: (bool? value) {
-              if (value != null) {
-                BlocProvider.of<TaskListBloc>(context)
-                    .add(TaskListItemChecked(task: task, isChecked: value));
-              }
-            },
-            shape: const CircleBorder(),
-          ),
-          title: Text(task.title,
-              style: task.isDone
-                  ? TextStyle(
-                      decoration: TextDecoration.lineThrough,
-                      color: Theme.of(context).colorScheme.onBackground)
-                  : null,
-              maxLines: 1,
-              softWrap: true,
-              overflow: TextOverflow.ellipsis),
-          trailing: Image.asset('assets/icons/change_order_item.png',
-              width: 20, height: 20),
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15))),
-          tileColor: Theme.of(context).colorScheme.primary,
-        ),
+        child: _TaskListTile(task: task),
       ),
+    );
+  }
+}
+
+class _TaskListTile extends StatelessWidget {
+  const _TaskListTile({
+    Key? key,
+    required this.task,
+  }) : super(key: key);
+
+  final Task task;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: const EdgeInsets.only(right: 10),
+      leading: Checkbox(
+        activeColor: Theme.of(context).colorScheme.onBackground,
+        checkColor: Theme.of(context).colorScheme.primary,
+        value: task.isDone,
+        onChanged: (bool? value) {
+          if (value != null) {
+            BlocProvider.of<TaskListBloc>(context)
+                .add(TaskListItemChecked(task: task, isChecked: value));
+          }
+        },
+        shape: const CircleBorder(),
+      ),
+      title: Text(task.title,
+          style: task.isDone
+              ? TextStyle(
+                  decoration: TextDecoration.lineThrough,
+                  color: Theme.of(context).colorScheme.onBackground)
+              : null,
+          maxLines: 1,
+          softWrap: true,
+          overflow: TextOverflow.ellipsis),
+      trailing: Image.asset('assets/icons/change_order_item.png',
+          width: 20, height: 20),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15))),
+      tileColor: Theme.of(context).colorScheme.primary,
     );
   }
 }
