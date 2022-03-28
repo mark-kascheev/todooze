@@ -40,7 +40,7 @@ class _TaskItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(15),
       child: Dismissible(
         key: UniqueKey(),
         secondaryBackground: const _DismissibleActionBackground(color: Colors.red, alignment: Alignment.centerRight, iconPath: 'delete'),
