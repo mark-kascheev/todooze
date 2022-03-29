@@ -13,7 +13,7 @@ class TodooozeTheme extends ChangeNotifier {
 
   static lightTheme() => ThemeData(
       appBarTheme: const AppBarTheme(
-        systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light)
+        systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light, statusBarIconBrightness: Brightness.dark, statusBarColor: Color.fromRGBO(253, 252, 252, 1))
       ),
       unselectedWidgetColor: const Color.fromRGBO(132, 165, 234, 1),
       scaffoldBackgroundColor: const Color.fromRGBO(245, 245, 248, 1),
@@ -31,7 +31,7 @@ class TodooozeTheme extends ChangeNotifier {
 
   static darkTheme() => ThemeData(
       appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark)
+          systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark, statusBarIconBrightness: Brightness.light, statusBarColor: Color.fromRGBO(34, 34, 40, 1))
       ),
       unselectedWidgetColor: const Color.fromRGBO(132, 165, 234, 1),
       scaffoldBackgroundColor: const Color.fromRGBO(23, 23, 26, 1),
