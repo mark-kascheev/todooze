@@ -16,7 +16,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => BlurNotifier(false),
+      create: (context) => BlurNotifier(null),
       child: Stack(
         children: [
           Scaffold(

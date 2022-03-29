@@ -10,7 +10,7 @@ class BlurArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<BlurNotifier>(builder: (context, blurNotifier, child) {
-      final needBlur = blurNotifier.value;
+      final needBlur = blurNotifier.value ?? false;
       if (needBlur) {
         return BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
