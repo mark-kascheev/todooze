@@ -18,12 +18,13 @@ class _ExpandableFloatingButtonState extends State<ExpandableFloatingButton>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _expandAnimation;
+  bool _open = false;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      value: 1,
+      value: _open ? 1 : 0,
       duration: const Duration(milliseconds: 250),
       vsync: this,
     );
@@ -44,10 +45,13 @@ class _ExpandableFloatingButtonState extends State<ExpandableFloatingButton>
   Widget build(BuildContext context) {
     return Consumer<BlurNotifier>(builder: (context, blur, child) {
       final needBlur = blur.value;
-      if (needBlur) {
-        _controller.forward();
-      } else {
-        _controller.reverse();
+      if (needBlur != null) {
+        _open = needBlur;
+        if (_open) {
+          _controller.forward();
+        } else {
+          _controller.reverse();
+        }
       }
       return SizedBox.expand(
         child: Stack(
@@ -57,8 +61,7 @@ class _ExpandableFloatingButtonState extends State<ExpandableFloatingButton>
             _TapCloseButton(onTap: context.read<BlurNotifier>().unBlurScreen),
             ..._buildExpandingActionButtons(),
             _TapOpenButton(
-                isOpen: needBlur,
-                onTap: context.read<BlurNotifier>().blurScreen),
+                isOpen: _open, onTap: context.read<BlurNotifier>().blurScreen),
           ],
         ),
       );
