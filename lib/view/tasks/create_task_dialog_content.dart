@@ -21,43 +21,50 @@ class _CreateTaskDialogContentState extends State<CreateTaskDialogContent> {
     return BlocProvider(
       create: (BuildContext context) =>
           CreateTaskBloc(TaskDataRepository(FirebaseTaskApi())),
-      child: Container(
-        margin: MediaQuery.of(context).viewInsets,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        ),
-        child: Material(
-          color: Theme.of(context).colorScheme.primary,
-          child: BlocBuilder<CreateTaskBloc, CreateTaskState>(
-              builder: (context, state) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _TitleField(onKeyboardAction: () => _saveTask(context)),
-                description,
-                Row(
-                  children: [
-                    _DialogIconButton(
-                        onTap: _openDescriptionField,
-                        iconPath: 'assets/icons/description.png'),
-                    const SizedBox(width: 30),
-                    const _DialogIconButton(
-                        iconPath: 'assets/icons/calendar.png'),
-                    const Spacer(),
-                    _DialogIconButton(
-                        onTap: state.task.title.isEmpty
-                            ? null
-                            : () => _saveTask(context),
-                        iconPath: 'assets/icons/save.png',
-                        color: Theme.of(context).colorScheme.secondaryContainer),
-                  ],
-                )
-              ],
-            );
-          }),
+      child: BlocListener<CreateTaskBloc, CreateTaskState>(
+        listener: (context, state) {
+          if(state is CreateTaskSaveSuccess) {
+            Navigator.of(context).pop();
+          }
+        },
+        child: Container(
+          margin: MediaQuery.of(context).viewInsets,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          ),
+          child: Material(
+            color: Theme.of(context).colorScheme.primary,
+            child: BlocBuilder<CreateTaskBloc, CreateTaskState>(
+                builder: (context, state) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _TitleField(onKeyboardAction: () => _saveTask(context)),
+                  description,
+                  Row(
+                    children: [
+                      _DialogIconButton(
+                          onTap: _openDescriptionField,
+                          iconPath: 'assets/icons/description.png'),
+                      const SizedBox(width: 30),
+                      const _DialogIconButton(
+                          iconPath: 'assets/icons/calendar.png'),
+                      const Spacer(),
+                      _DialogIconButton(
+                          onTap: state.task.title.isEmpty
+                              ? null
+                              : () => _saveTask(context),
+                          iconPath: 'assets/icons/save.png',
+                          color: Theme.of(context).colorScheme.secondaryContainer),
+                    ],
+                  )
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );
@@ -78,7 +85,7 @@ class _CreateTaskDialogContentState extends State<CreateTaskDialogContent> {
 
   void _saveTask(BuildContext context) {
     BlocProvider.of<CreateTaskBloc>(context).add(CreateTaskSaved());
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
   }
 }
 

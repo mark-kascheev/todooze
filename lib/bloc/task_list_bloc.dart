@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todoooze/domain/repository/task_repository.dart';
 import 'package:todoooze/domain/model/task.dart';
@@ -28,37 +29,58 @@ class TaskListBloc extends Bloc<TaskListEvent, TaskListState> {
   }
 }
 
-abstract class TaskListEvent {}
+abstract class TaskListEvent extends Equatable{}
 
-class TaskListStarted extends TaskListEvent {}
+class TaskListStarted extends TaskListEvent {
+  @override
+  List<Object?> get props => [];
+}
 
 class TaskListItemChecked extends TaskListEvent {
   final Task task;
   final bool isChecked;
 
   TaskListItemChecked({required this.task, required this.isChecked});
+
+  @override
+  List<Object?> get props => [task, isChecked];
 }
 
 class TaskListItemDeleted extends TaskListEvent {
   final Task task;
 
   TaskListItemDeleted({required this.task});
+
+  @override
+  List<Object?> get props => [task];
 }
 
-abstract class TaskListState {}
+abstract class TaskListState extends Equatable {}
 
-class TaskListInitial extends TaskListState {}
+class TaskListInitial extends TaskListState {
+  @override
+  List<Object?> get props => [];
+}
 
-class TaskListLoadInProgress extends TaskListState {}
+class TaskListLoadInProgress extends TaskListState {
+  @override
+  List<Object?> get props => [];
+}
 
 class TaskListLoadSuccess extends TaskListState {
   final List<Task> tasks;
 
   TaskListLoadSuccess(this.tasks);
+
+  @override
+  List<Object?> get props => [tasks];
 }
 
 class TaskListLoadFailure extends TaskListState {
   final String message;
 
   TaskListLoadFailure(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }

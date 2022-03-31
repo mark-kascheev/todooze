@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todoooze/domain/model/task.dart';
 import 'package:todoooze/domain/repository/task_repository.dart';
@@ -20,40 +21,59 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
   }
 
   void _createNewTask(CreateTaskSaved event, Emitter emit) async{
+    final Task task = state.task;
     try {
-      if(state.task.title.isNotEmpty) {
-        await taskRepository.addNewTask(state.task);
+      if(task.title.isNotEmpty) {
+        await taskRepository.addNewTask(task);
+        emit(CreateTaskSaveSuccess(task));
       }
     } catch(e) {
-
+      emit(CreateTaskSaveFailure(task: task, message: 'Error'));
     }
   }
 }
 
-class CreateTaskEvent {}
+abstract class CreateTaskEvent extends Equatable{}
 
 class CreateTaskTitleEntered extends CreateTaskEvent {
   final String title;
 
   CreateTaskTitleEntered(this.title);
+
+  @override
+  List<Object?> get props => [title];
 }
 
 class CreateTaskDescriptionEntered extends CreateTaskEvent {
   final String description;
 
   CreateTaskDescriptionEntered(this.description);
+
+  @override
+  List<Object?> get props => [description];
 }
 
-class CreateTaskSaved extends CreateTaskEvent {}
+class CreateTaskSaved extends CreateTaskEvent {
+  @override
+  List<Object?> get props => [];
+}
 
-class CreateTaskState {
+class CreateTaskState extends Equatable{
   final Task task;
 
-  CreateTaskState(this.task);
+  const CreateTaskState(this.task);
+
+  @override
+  List<Object?> get props => [task];
+}
+
+class CreateTaskSaveSuccess extends CreateTaskState {
+
+  const CreateTaskSaveSuccess(Task task) : super(task);
 }
 
 class CreateTaskSaveFailure extends CreateTaskState {
   final String message;
 
-  CreateTaskSaveFailure({required Task task, required this.message}) : super(task);
+  const CreateTaskSaveFailure({required Task task, required this.message}) : super(task);
 }
