@@ -1,4 +1,4 @@
-[![Tests](https://github.com/mark-kascheev/todooze/actions/workflows/Tests.yml/badge.svg?branch=develop)](https://github.com/mark-kascheev/todooze/actions/workflows/Tests.yml)
+[![tests](https://github.com/mark-kascheev/todooze/actions/workflows/pull_request_pipe.yml/badge.svg)](https://github.com/mark-kascheev/todooze/actions/workflows/pull_request_pipe.yml)
 # Todoooze
 
 A new Flutter project.
