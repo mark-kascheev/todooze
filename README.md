@@ -1,4 +1,5 @@
 [![tests](https://github.com/mark-kascheev/todooze/actions/workflows/pull_request_pipe.yml/badge.svg)](https://github.com/mark-kascheev/todooze/actions/workflows/pull_request_pipe.yml)
+[![android build](https://github.com/mark-kascheev/todooze/actions/workflows/android_build.yml/badge.svg)](https://github.com/mark-kascheev/todooze/actions/workflows/android_build.yml)
 # Todoooze
 
 A new Flutter project.
