@@ -1,4 +1,4 @@
-name: Test before merge 
+name: Tests
 
 on:
   pull_request:
